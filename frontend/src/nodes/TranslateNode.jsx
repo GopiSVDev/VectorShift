@@ -25,6 +25,8 @@ const TranslateNode = ({ id, data }) => {
       title="Translate"
       inputs={[{ id: `${id}-input`, position: Position.Left }]}
       outputs={[{ id: `${id}-output`, position: Position.Right }]}
+      desc={"Translate text from one language to another."}
+      data={data}
     >
       <div>
         <label>

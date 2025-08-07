@@ -5,11 +5,27 @@ import { SiOpenai } from "react-icons/si";
 
 const PipelineToolbar = () => {
   const nodes = [
-    { type: "customInput", label: "Input", icon: <MdInput /> },
-    { type: "llm", label: "LLM", icon: <SiOpenai /> },
-    { type: "customOutput", label: "Output", icon: <MdOutlineOutput /> },
-    { type: "text", label: "Text", icon: <BsChatRightText /> },
-    { type: "translate", label: "Translate", icon: <BsTranslate /> },
+    {
+      type: "Input",
+      label: "Input",
+      icon: <MdInput />,
+    },
+    { type: "llm", label: "LLM", desc: "", icon: <SiOpenai /> },
+    {
+      type: "Output",
+      label: "Output",
+      icon: <MdOutlineOutput />,
+    },
+    {
+      type: "text",
+      label: "Text",
+      icon: <BsChatRightText />,
+    },
+    {
+      type: "translate",
+      label: "Translate",
+      icon: <BsTranslate />,
+    },
   ];
 
   return (

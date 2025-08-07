@@ -21,9 +21,9 @@ import "@xyflow/react/dist/style.css";
 const gridSize = 20;
 const proOptions = { hideAttribution: true };
 const nodeTypes = {
-  customInput: InputNode,
+  Input: InputNode,
   llm: LLMNode,
-  customOutput: OutputNode,
+  Output: OutputNode,
   text: TextNode,
   translate: TranslateNode,
 };
@@ -36,6 +36,7 @@ const selector = (state) => ({
   onNodesChange: state.onNodesChange,
   onEdgesChange: state.onEdgesChange,
   onConnect: state.onConnect,
+  getInitNodeData: state.getInitNodeData,
 });
 
 export const PipelineUI = () => {
@@ -51,18 +52,14 @@ export const PipelineUI = () => {
     onNodesChange,
     onEdgesChange,
     onConnect,
+    getInitNodeData,
   } = useStore(selector, shallow);
 
-  const getInitNodeData = (nodeID, type) => {
-    let nodeData = { id: nodeID, nodeType: `${type}` };
-    return nodeData;
-  };
+  console.log(nodes);
 
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
-
-      const reactFlowBounds = reactFlowWrapper.current.getBoundingClientRect();
 
       if (event?.dataTransfer?.getData("application/reactflow")) {
         const appData = JSON.parse(
@@ -76,23 +73,26 @@ export const PipelineUI = () => {
         }
 
         const position = screenToFlowPosition({
-          x: event.clientX - reactFlowBounds.left,
-          y: event.clientY - reactFlowBounds.top,
+          x: event.clientX,
+          y: event.clientY,
         });
 
         const nodeID = getNodeID(type);
+        const data = getInitNodeData(nodeID, type);
+
+        console.log(data);
 
         const newNode = {
           id: nodeID,
           type,
           position,
-          data: getInitNodeData(nodeID, type),
+          data: data,
         };
 
         addNode(newNode);
       }
     },
-    [screenToFlowPosition]
+    [addNode, getInitNodeData, getNodeID, screenToFlowPosition]
   );
 
   const onDragOver = useCallback((event) => {
@@ -101,7 +101,7 @@ export const PipelineUI = () => {
   }, []);
 
   return (
-    <div ref={reactFlowWrapper} className="w-full h-[80vh]">
+    <div ref={reactFlowWrapper} className="w-full flex-1">
       <ReactFlow
         nodes={nodes}
         edges={edges}

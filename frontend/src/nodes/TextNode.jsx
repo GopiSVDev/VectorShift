@@ -3,7 +3,7 @@ import { Position } from "@xyflow/react";
 import BaseNode from "./BaseNode";
 
 const TextNode = ({ id, data }) => {
-  const [currText, setCurrText] = useState(data?.text || "{{input}}");
+  const [currText, setCurrText] = useState();
 
   const handleTextChange = (e) => {
     setCurrText(e.target.value);
@@ -12,7 +12,15 @@ const TextNode = ({ id, data }) => {
   const outputs = [{ position: Position.Right, id: `${id}-output` }];
 
   return (
-    <BaseNode id={id} title="Text" outputs={outputs}>
+    <BaseNode
+      id={id}
+      title="Text"
+      outputs={outputs}
+      data={data || "{{input}}"}
+      desc={
+        "Accepts Text from upstream nodes and allows you to write additional text / concatenate different texts to pass to downstream nodes."
+      }
+    >
       {/* Children */}
       <div>
         <label>

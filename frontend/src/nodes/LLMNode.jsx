@@ -1,7 +1,7 @@
 import { Position } from "@xyflow/react";
 import BaseNode from "./BaseNode";
 
-const LLMNode = ({ id }) => {
+const LLMNode = ({ id, data }) => {
   const inputs = [
     {
       position: Position.Left,
@@ -18,7 +18,7 @@ const LLMNode = ({ id }) => {
   const outputs = [{ position: Position.Right, id: `${id}-response` }];
 
   return (
-    <BaseNode id={id} title="LLM" inputs={inputs} outputs={outputs}>
+    <BaseNode id={id} title="LLM" inputs={inputs} outputs={outputs} data={data}>
       {/* Children */}
       <div>
         <span>This is a LLM.</span>
