@@ -113,6 +113,8 @@ export const PipelineUI = () => {
         nodeTypes={nodeTypes}
         proOptions={proOptions}
         snapGrid={[gridSize, gridSize]}
+        panOnScroll={true}
+        selectionOnDrag={true}
         connectionLineType="smoothstep"
       >
         <Background color="#aaa" gap={gridSize} />

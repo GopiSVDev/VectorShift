@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Position } from "@xyflow/react";
 import BaseNode from "./BaseNode";
+import AutoGrowingTextarea from "../components/ui/AutoGrowingTextarea";
 
 const TextNode = ({ id, data }) => {
   const [currText, setCurrText] = useState();
@@ -22,11 +23,20 @@ const TextNode = ({ id, data }) => {
       }
     >
       {/* Children */}
-      <div>
-        <label>
-          Text:
-          <input type="text" value={currText} onChange={handleTextChange} />
-        </label>
+      <div className="flex flex-row w-full items-center h-full relative cursor-text">
+        {/* <textarea
+          className="w-full border-2 text-xl cursor-text rounded-[4px] py-2 px-2 resize-none max-h-[180px] text-black field-sizing-content"
+          rows={1}
+          value={currText}
+          onChange={handleTextChange}
+        /> */}
+        <AutoGrowingTextarea
+          value={currText}
+          onChange={handleTextChange}
+          placeholder="Type '{{' to utilize variables"
+          minRows={1}
+          maxRows={6}
+        />
       </div>
     </BaseNode>
   );

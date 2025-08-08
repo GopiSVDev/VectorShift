@@ -27,7 +27,7 @@ function DeleteNodeButton({ id, deleteNode }) {
       className={`cursor-pointer transition-colors ${
         armed ? "text-red-500" : "text-gray-400 hover:text-red-400"
       }`}
-      title={armed ? "Click again to delete" : "Delete"}
+      title={armed ? "Confirm Delete" : "Delete"}
     />
   );
 }

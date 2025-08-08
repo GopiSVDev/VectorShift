@@ -35,7 +35,8 @@ const BaseNode = ({
   return (
     <div
       id={`node-${id}`}
-      className="transition-colors transition-border duration-200 p-0 m-0 rounded-[6px] relative border-box border-[1px] text-slate-700 shadow-[0px_0px_0px_2px_#cecffc] bg-[#ffffff] hover:border-[#A9ABF7] hover:shadow-[0px_0px_0px_4px_#cecffc]"
+      className="transition-colors transition-border duration-200 p-0 m-0 rounded-[6px] relative border-box border-[1px] text-slate-700 shadow-[0px_0px_0px_2px_#cecffc] bg-[#ffffff] hover:border-[#A9ABF7] hover:shadow-[0px_0px_0px_4px_#cecffc] 
+      w-[400px]"
     >
       {/* node info */}
       <div className="flex flex-col gap-3 px-4 py-3 m-3 bg-indigo-1 rounded-md border border-indigo-6 bg-[rgb(238,242,255)]">
@@ -46,7 +47,7 @@ const BaseNode = ({
           <DeleteNodeButton id={id} deleteNode={deleteNode} />
         </div>
         {/* node desc */}
-        <div className="text-black">{desc}</div>
+        <div className="text-black break-words whitespace-normal">{desc}</div>
       </div>
 
       {/* name */}
@@ -59,7 +60,9 @@ const BaseNode = ({
             onChange={handleNameChange}
           />
         </div>
-        <div className="w-full flex flex-col justify-center">{children}</div>
+        <div className="w-full flex flex-col justify-center items-center">
+          {children}
+        </div>
       </div>
 
       {/* <div className="flex flex-col flex-1 gap-3 relative px-[18px] pt-2 pb-4 w-full">
