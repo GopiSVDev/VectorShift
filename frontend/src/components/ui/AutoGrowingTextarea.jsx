@@ -42,7 +42,7 @@ const AutoGrowingTextarea = ({
         onChange(e);
         resizeTextarea();
       }}
-      onWheel={(e) => {
+      onWheelCapture={(e) => {
         const target = e.currentTarget;
         const delta = e.deltaY;
 
@@ -53,8 +53,15 @@ const AutoGrowingTextarea = ({
         const atBottom =
           target.scrollTop + target.clientHeight >= target.scrollHeight;
 
-        if ((isScrollingUp && !atTop) || (isScrollingDown && !atBottom)) {
+        const canScrollUp = !atTop;
+        const canScrollDown = !atBottom;
+
+        if (
+          (isScrollingUp && canScrollUp) ||
+          (isScrollingDown && canScrollDown)
+        ) {
           e.stopPropagation();
+          e.preventDefault();
         }
       }}
       style={{

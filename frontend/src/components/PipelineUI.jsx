@@ -15,6 +15,7 @@ import OutputNode from "../nodes/OutputNode";
 import InputNode from "../nodes/InputNode";
 import TextNode from "../nodes/TextNode";
 import TranslateNode from "../nodes/TranslateNode";
+import ConnectionLine from "./ui/ConnectionLine";
 
 import "@xyflow/react/dist/style.css";
 
@@ -55,8 +56,6 @@ export const PipelineUI = () => {
     getInitNodeData,
   } = useStore(selector, shallow);
 
-  console.log(nodes);
-
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
@@ -79,8 +78,6 @@ export const PipelineUI = () => {
 
         const nodeID = getNodeID(type);
         const data = getInitNodeData(nodeID, type);
-
-        console.log(data);
 
         const newNode = {
           id: nodeID,
@@ -116,6 +113,15 @@ export const PipelineUI = () => {
         panOnScroll={true}
         selectionOnDrag={true}
         connectionLineType="smoothstep"
+        defaultEdgeOptions={{
+          style: {
+            stroke: "#4f46e5",
+            strokeWidth: 2.5,
+            strokeDasharray: "10,6",
+          },
+          className: "custom-animated-edge",
+        }}
+        connectionLineComponent={ConnectionLine}
       >
         <Background color="#aaa" gap={gridSize} />
         <Controls />

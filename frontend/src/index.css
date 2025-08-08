@@ -5,3 +5,25 @@ body {
   height: 100%;
   font-family: "Inter";
 }
+
+@keyframes dash-flow {
+  from {
+    stroke-dashoffset: 20;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.animated-dash {
+  stroke-dashoffset: 20;
+  animation: dash-flow 1s linear infinite;
+}
+
+.custom-animated-edge .react-flow__edge-path {
+  stroke-dasharray: 10, 6;
+  stroke-dashoffset: 20;
+  animation: dash-flow 1.5s steps(4) infinite;
+  will-change: stroke-dashoffset;
+  filter: drop-shadow(0 0 3px rgba(79, 70, 229, 0.4));
+}

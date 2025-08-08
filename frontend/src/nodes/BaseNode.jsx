@@ -76,7 +76,23 @@ const BaseNode = ({
           type="target"
           position={position}
           id={id}
-          style={style}
+          style={{
+            backgroundColor: "white",
+            border: "2px solid #4f46e5",
+            width: "12px",
+            height: "12px",
+            borderRadius: "50%",
+            padding: "8px",
+            boxSizing: "border-box",
+            position: "absolute",
+            top: "50%",
+            left: "-10px",
+            transform: "translateY(-50%)",
+            right: 0,
+            transition: "all 300ms ease-in-out",
+            zIndex: 10,
+            ...style,
+          }}
         />
       ))}
 
@@ -87,7 +103,22 @@ const BaseNode = ({
           type="source"
           position={position}
           id={id}
-          style={style}
+          style={{
+            backgroundColor: "white",
+            border: "2px solid #4f46e5",
+            width: "12px",
+            height: "12px",
+            borderRadius: "50%",
+            padding: "8px",
+            boxSizing: "border-box",
+            position: "absolute",
+            top: "50%",
+            transform: "translateY(-50%)",
+            right: "-10px",
+            transition: "all 300ms ease-in-out",
+            zIndex: 10,
+            ...style,
+          }}
         />
       ))}
     </div>
