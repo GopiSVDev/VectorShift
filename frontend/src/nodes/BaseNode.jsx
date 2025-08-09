@@ -66,9 +66,9 @@ const BaseNode = ({
       </div>
 
       {/* Target Handlers  */}
-      {inputs.map(({ id, position, style }) => (
+      {inputs.map(({ id, position, style }, i) => (
         <Handle
-          key={id}
+          key={`${id}-${i}`}
           type="target"
           position={position}
           id={id}
@@ -93,9 +93,9 @@ const BaseNode = ({
       ))}
 
       {/* Source Handlers  */}
-      {outputs.map(({ id, position, style }) => (
+      {outputs.map(({ id, position, style }, i) => (
         <Handle
-          key={id}
+          key={`${id}-${i}`}
           type="source"
           position={position}
           id={id}

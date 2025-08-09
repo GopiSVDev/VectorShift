@@ -56,6 +56,8 @@ export const PipelineUI = () => {
     getInitNodeData,
   } = useStore(selector, shallow);
 
+  console.log(nodes);
+
   const onDrop = useCallback(
     (event) => {
       event.preventDefault();
