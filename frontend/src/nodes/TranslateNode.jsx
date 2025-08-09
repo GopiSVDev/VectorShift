@@ -5,26 +5,23 @@ import { Position } from "@xyflow/react";
 const TranslateNode = ({ id, data }) => {
   const [inputText, setInputText] = useState(data?.text || "");
   const [language, setLanguage] = useState(data?.language || "en");
-  //   const [translatedText, setTranslatedText] = useState("");
 
   const handleLanguageChange = (e) => {
     const lang = e.target.value;
     setLanguage(lang);
-    // setTranslatedText(`"${inputText}" in ${lang}`);
   };
 
   const handleTextChange = (e) => {
     const text = e.target.value;
     setInputText(text);
-    // setTranslatedText(`"${text}" in ${language}`);
   };
 
   return (
     <BaseNode
       id={id}
       title="Translate"
-      inputs={[{ id: `${id}-input`, position: Position.Left }]}
-      outputs={[{ id: `${id}-output`, position: Position.Right }]}
+      inputs={[{ id: `${id}-value`, position: Position.Left }]}
+      outputs={[{ id: `${id}-value`, position: Position.Right }]}
       desc={"Translate text from one language to another."}
       data={data}
     >

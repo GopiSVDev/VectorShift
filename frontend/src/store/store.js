@@ -80,7 +80,7 @@ export const useStore = createWithEqualityFn((set, get) => ({
   getInitNodeData: (nodeID, type) => {
     const nodes = get().nodes;
 
-    const prefix = type.toLowerCase(); // e.g., "input"
+    const prefix = type.toLowerCase();
     const usedNumbers = new Set();
 
     for (const node of nodes) {
@@ -103,5 +103,13 @@ export const useStore = createWithEqualityFn((set, get) => ({
       nodeType: type,
       name,
     };
+  },
+
+  setEdges: (updater) => {
+    set((state) => {
+      const nextEdges =
+        typeof updater === "function" ? updater(state.edges) : updater;
+      return { edges: nextEdges };
+    });
   },
 }));

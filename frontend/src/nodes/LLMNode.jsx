@@ -5,17 +5,17 @@ const LLMNode = ({ id, data }) => {
   const inputs = [
     {
       position: Position.Left,
-      id: `${id}-system`,
+      id: `${id}-value`,
       style: { top: `${100 / 3}%` },
     },
     {
       position: Position.Left,
-      id: `${id}-prompt`,
+      id: `${id}-value`,
       style: { top: `${200 / 3}%` },
     },
   ];
 
-  const outputs = [{ position: Position.Right, id: `${id}-response` }];
+  const outputs = [{ position: Position.Right, id: `${id}-value` }];
 
   return (
     <BaseNode id={id} title="LLM" inputs={inputs} outputs={outputs} data={data}>

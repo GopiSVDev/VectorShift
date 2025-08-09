@@ -65,10 +65,6 @@ const BaseNode = ({
         </div>
       </div>
 
-      {/* <div className="flex flex-col flex-1 gap-3 relative px-[18px] pt-2 pb-4 w-full">
-        
-      </div> */}
-
       {/* Target Handlers  */}
       {inputs.map(({ id, position, style }) => (
         <Handle

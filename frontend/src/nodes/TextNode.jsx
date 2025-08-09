@@ -10,13 +10,15 @@ const TextNode = ({ id, data }) => {
     setCurrText(e.target.value);
   };
 
-  const outputs = [{ position: Position.Right, id: `${id}-output` }];
+  const outputs = [{ position: Position.Right, id: `${id}-value` }];
+  const inputs = [{ position: Position.Left, id: `${id}-value` }];
 
   return (
     <BaseNode
       id={id}
       title="Text"
       outputs={outputs}
+      inputs={inputs}
       data={data || "{{input}}"}
       desc={
         "Accepts Text from upstream nodes and allows you to write additional text / concatenate different texts to pass to downstream nodes."
@@ -31,6 +33,7 @@ const TextNode = ({ id, data }) => {
           onChange={handleTextChange}
         /> */}
         <AutoGrowingTextarea
+          currentNodeId={id}
           value={currText}
           onChange={handleTextChange}
           placeholder="Type '{{' to utilize variables"
