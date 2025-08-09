@@ -1,6 +1,6 @@
-import { useEffect } from "react";
 import { useAutoComplete } from "../utils/useAutoComplete";
 import { DropdownMenu } from "./DropdownMenu";
+import TextareaAutosize from "react-textarea-autosize";
 
 export default function AutoGrowingTextarea({
   currentNodeId,
@@ -13,7 +13,6 @@ export default function AutoGrowingTextarea({
 }) {
   const {
     textareaRef,
-    mirrorRef,
     showMenu,
     filteredNodes,
     menuPos,
@@ -27,50 +26,15 @@ export default function AutoGrowingTextarea({
     onSelect: (newVal) => onChange({ target: { value: newVal } }),
   });
 
-  const resizeTextarea = () => {
-    const textarea = textareaRef.current;
-    if (!textarea) return;
-    textarea.rows = minRows;
-    const lineHeight = parseInt(
-      getComputedStyle(textarea).lineHeight || "24",
-      10
-    );
-
-    const currentRows = Math.floor(textarea.scrollHeight / lineHeight);
-
-    if (currentRows >= maxRows) {
-      textarea.rows = maxRows;
-      textarea.style.overflowY = "auto";
-    } else {
-      textarea.rows = currentRows;
-      textarea.style.overflowY = "hidden";
-    }
-  };
-
-  useEffect(() => {
-    resizeTextarea();
-  }, [value]);
-
   return (
     <div className="relative w-full">
-      <div
-        ref={mirrorRef}
-        className="invisible absolute top-0 left-0 w-full p-2 pointer-events-none"
-        style={{
-          fontSize: "1rem",
-          lineHeight: "1.5",
-          whiteSpace: "pre-wrap",
-          wordWrap: "break-word",
-        }}
-      />
-      <textarea
+      <TextareaAutosize
         ref={textareaRef}
         value={value}
-        onChange={(e) => {
-          onChange(e);
-          resizeTextarea();
-        }}
+        onChange={onChange}
         onKeyDown={handleKeyDown}
+        minRows={minRows}
+        maxRows={maxRows}
         onWheelCapture={(e) => {
           const target = e.currentTarget;
           const delta = e.deltaY;
@@ -96,12 +60,11 @@ export default function AutoGrowingTextarea({
         style={{
           resize: "none",
           overflowY: "auto",
-          lineHeight: "1.5",
           fontSize: "1rem",
-          width: "100%",
           padding: "8px",
           borderRadius: "4px",
           border: "1px solid #ccc",
+          width: "100%",
         }}
       />
       {showMenu && (

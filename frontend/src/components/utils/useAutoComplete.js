@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { useStore } from "../../store/store";
+import getCaretCoordinates from "textarea-caret";
 
 export function useAutoComplete({
   currentNodeId,
@@ -8,7 +9,6 @@ export function useAutoComplete({
   onSelect,
 }) {
   const textareaRef = useRef(null);
-  const mirrorRef = useRef(null);
 
   const [showMenu, setShowMenu] = useState(false);
   const [filteredNodes, setFilteredNodes] = useState([]);
@@ -21,35 +21,16 @@ export function useAutoComplete({
   const onConnect = useStore((state) => state.onConnect);
   const setEdges = useStore((state) => state.setEdges);
 
-  const updateMirror = () => {
+  const updateMenuPosition = () => {
     const textarea = textareaRef.current;
-    const mirror = mirrorRef.current;
-    if (!textarea || !mirror) return;
+    if (!textarea) return;
 
-    const beforeCaret = value.substring(0, textarea.selectionStart);
-    const afterCaret = value.substring(textarea.selectionStart);
+    const caretPos = getCaretCoordinates(textarea, textarea.selectionStart);
 
-    mirror.innerHTML =
-      beforeCaret
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/\n/g, "<br/>") +
-      "<span id='caret'>|</span>" +
-      afterCaret
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/\n/g, "<br/>");
-
-    const caretSpan = mirror.querySelector("#caret");
-
-    if (caretSpan) {
-      const rect = caretSpan.getBoundingClientRect();
-      const containerRect = mirror.getBoundingClientRect();
-      setMenuPos({
-        top: rect.top - containerRect.top + 20,
-        left: rect.left - containerRect.left,
-      });
-    }
+    setMenuPos({
+      top: caretPos.top + caretPos.height + 4,
+      left: caretPos.left,
+    });
   };
 
   const insertAtCaret = (insertText, targetNodeId) => {
@@ -64,14 +45,12 @@ export function useAutoComplete({
     setShowMenu(false);
     setTriggerIndex(null);
 
-    setTimeout(() => {
-      onConnect({
-        source: targetNodeId,
-        sourceHandle: `${targetNodeId}-value`,
-        target: currentNodeId,
-        targetHandle: `${currentNodeId}-value`,
-      });
-    }, 0);
+    onConnect({
+      source: targetNodeId,
+      sourceHandle: `${targetNodeId}-value`,
+      target: currentNodeId,
+      targetHandle: `${currentNodeId}-value`,
+    });
 
     setTimeout(() => {
       textarea.focus();
@@ -131,7 +110,7 @@ export function useAutoComplete({
       setTriggerIndex(start);
       setShowMenu(true);
 
-      setTimeout(updateMirror, 0);
+      setTimeout(updateMenuPosition, 0);
     }
 
     if (e.key === "Escape") {
@@ -171,12 +150,11 @@ export function useAutoComplete({
   };
 
   useEffect(() => {
-    if (showMenu) updateMirror();
+    if (showMenu) updateMenuPosition();
   }, [value, showMenu]);
 
   return {
     textareaRef,
-    mirrorRef,
     showMenu,
     filteredNodes,
     selectedIndex,
